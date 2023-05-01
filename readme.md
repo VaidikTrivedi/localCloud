@@ -1,0 +1,1 @@
+I'm creating a local cloud using Django Python3, where data will get store locally on Raspberry Pi but can be accessible from anywhere on earth using HttpSocket
