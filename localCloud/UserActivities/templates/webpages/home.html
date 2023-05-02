@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Home Page</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+<body>
+
+{% extends 'webpages/main.html' %}
+
+{% block content %}
+
+<style type="text/css">
+	.banner {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    /* background: linear-gradient(180deg, transparent 50%, rgba(152,47,138,.5) 50%) rgb(0, 0, 0);
+    background-image: url(resources/home-cover.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(2px);
+    -webkit-filter: blur(2px);
+    background-size: cover;    */
+    align-items: center;
+}
+/* .blur{
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-image: url(resources/home-cover.jpg);
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: blur(2px);
+    -webkit-filter: blur(2px); 
+} */
+.content {
+    max-width: max-content;
+    flex-direction: column;
+    text-align: center;
+}
+.content h2 {
+    font-size: 5em;
+    color: rgb(200, 185, 150);
+}
+.content p {
+    font-size: 2em;
+    flex-direction: column;
+    color: rgb(224, 204, 204);
+}
+</style>
+
+<section class="banner">
+    <div class="content">
+        <h2>An investment in knowledge pays the best interest.</h2>
+        {% if user.is_authenticated %}
+        <p>Login as: {{ request.user.groups.all.0.name }}</p>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}
+
+</body>
