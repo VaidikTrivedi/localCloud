@@ -8,6 +8,7 @@ class User(AbstractUser):
     first_name = models.CharField(max_length=50, blank=True, null=True)
     last_name = models.CharField(max_length=50, blank=True, null=True)
     date_of_birth = models.DateField(blank=True, null=True)
+    dirPath = models.DateField(max_length=500, blank=True, null=True)
     
     def __str__(self):
         return self.username
