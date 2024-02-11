@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>After Login</title>
+</head>
+<body>
+
+    <table width="100px" border="0" cellspacing="10px" cellpadding="10px">
+        <tbody>
+            {% for item in items %}
+            <tr>
+                <td>
+                    <img src=" {{item}} "/>
+                    {{ item }}
+                </td>
+            </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+    
+</body>
+</html>

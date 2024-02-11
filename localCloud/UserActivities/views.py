@@ -7,6 +7,7 @@ from .form import CreateUserForm
 from . import models
 from . import fileManagement
 import random
+import os
 
 # Create your views here.
 def home(request):
@@ -24,15 +25,27 @@ def loginPage(request):
 
         if user is not None:
             login(request, user)
-            return redirect('home')
+            response = HttpResponse("Welcome to the Home Server")
+            response.set_cookie("user", username)
+            response.status = 200
+            # TODO: Remove hardcoded argument
+            items = fileManagement.getItems("palupalu3")
+            print(os.path.abspath(items[0]))
+            return render(request, 'webpages/afterLogin.html', {'items': items})
         else:
             messages.error(request, 'Login Credentials Wrong! Please try again')
             return redirect('login')
 
     return render(request, 'webpages/login.html')
 
+def afterLogin(request):
+    # Get items from directory
+    dirPath = request.COOKIES.get('user')
+    items = fileManagement.getItems(dirPath)
+    return render(request, 'webpages/after_login.html', {'items': items})
 
-def logout_view(request):
+
+def logoutView(request):
     logout(request)
     return redirect('login')
 
@@ -56,7 +69,7 @@ def register(request):
                 flag = fileManagement.createDir(dirPath)
                 if (flag!=True):
                     raise Exception("Unable to create new directory")
-                models.User(fname, lname, dob, dirPath=dirPath, username=username, email=email)
+                models.User(fname, lname, dob, dirPath=username, username=username, email=email)
                 # user.save()
                 valid_user = authenticate(request, username=username, password=password)
                 print("\n\nValid User: ", valid_user)
@@ -68,7 +81,7 @@ def register(request):
                     group = Group.objects.get(name='user')
                     group.user_set.add(user)
                     messages.success(request, 'Registration Success as user!')
-                    return redirect('login')
+                    return redirect('afterLogin')
                 else:
                     return redirect('register')
         except Exception as e:
